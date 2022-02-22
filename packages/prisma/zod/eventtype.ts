@@ -1,7 +1,7 @@
 import * as z from "zod"
 import * as imports from "../zod-utils"
 import { PeriodType, SchedulingType } from "@prisma/client"
-import { CompleteUser, UserModel, CompleteTeam, TeamModel, CompleteBooking, BookingModel, CompleteAvailability, AvailabilityModel, CompleteDestinationCalendar, DestinationCalendarModel, CompleteEventTypeCustomInput, EventTypeCustomInputModel, CompleteSchedule, ScheduleModel } from "./index"
+import { CompleteUser, UserModel, CompleteTeam, TeamModel, CompleteBooking, BookingModel, CompleteAvailability, AvailabilityModel, CompleteWebhook, WebhookModel, CompleteDestinationCalendar, DestinationCalendarModel, CompleteEventTypeCustomInput, EventTypeCustomInputModel, CompleteSchedule, ScheduleModel } from "./index"
 
 // Helper schema for JSON fields
 type Literal = boolean | number | string
@@ -42,6 +42,7 @@ export interface CompleteEventType extends z.infer<typeof _EventTypeModel> {
   team?: CompleteTeam | null
   bookings: CompleteBooking[]
   availability: CompleteAvailability[]
+  webhooks: CompleteWebhook[]
   destinationCalendar?: CompleteDestinationCalendar | null
   customInputs: CompleteEventTypeCustomInput[]
   Schedule: CompleteSchedule[]
@@ -57,6 +58,7 @@ export const EventTypeModel: z.ZodSchema<CompleteEventType> = z.lazy(() => _Even
   team: TeamModel.nullish(),
   bookings: BookingModel.array(),
   availability: AvailabilityModel.array(),
+  webhooks: WebhookModel.array(),
   destinationCalendar: DestinationCalendarModel.nullish(),
   customInputs: EventTypeCustomInputModel.array(),
   Schedule: ScheduleModel.array(),
